@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "@boundfoxstudios/action-unassign-contributor-after-days-of-inactivity",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "This action will unassign an issue after certain days of inactivity.",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -10,12 +10,12 @@
     "format-check": "prettier --check '**/*.ts'",
     "lint": "eslint src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/BoundfoxStudios/action-unassign-contributor-after-days-of-inactivity.git"
   },
   "keywords": [
     "actions",
@@ -25,9 +25,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.10.0"
+    "@actions/core": "~1.10.0",
+    "@actions/github": "~5.1.1",
+    "luxon": "~3.0.4"
   },
   "devDependencies": {
+    "@octokit/types": "~7.5.1",
+    "@types/luxon": "~3.0.1",
     "@types/node": "^16.10.5",
     "@typescript-eslint/parser": "^4.33.0",
     "@vercel/ncc": "^0.31.1",

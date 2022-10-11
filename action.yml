@@ -1,11 +1,21 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Unassign contributor after days of inactivity'
+description: 'This action will unassign any issue after days of inactivity'
+author: 'Boundfox Studios'
 inputs:
-  milliseconds: # change this
+  token:
+    description: 'GitHub token'
+    required: false
+    default: ${{ github.token }}
+  last-activity:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'Days of last activity in an issue (checked against updatedAt). Defaults to 7 days'
+    default: '7'
+  labels:
+    required: false
+    description: 'Comma-separated list of labels for issues to search for'
+  exempt-assignees:
+    required: false
+    description: 'Comma-separated list of assignees names that never will be unassigned'
 runs:
   using: 'node16'
   main: 'dist/index.js'
