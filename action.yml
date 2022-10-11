@@ -1,6 +1,9 @@
 name: 'Unassign contributor after days of inactivity'
 description: 'This action will unassign any issue after days of inactivity. Best used together with actions/stale.'
 author: 'Boundfox Studios'
+branding:
+  icon: user-minus
+  color: gray-dark
 inputs:
   token:
     description: 'GitHub token'
