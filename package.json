@@ -19,10 +19,11 @@
   },
   "keywords": [
     "actions",
-    "node",
-    "setup"
+    "project management",
+    "github",
+    "issues"
   ],
-  "author": "",
+  "author": "Manuel Rauber <manuel.rauber@boundfoxstudios.com>",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "~1.10.0",
