@@ -36,7 +36,7 @@ name: Example
 
 on:
   schedule:
-    cron: '0 0 * * *'
+    - cron: '12 22 * * *' # Runs at 22:12 UTC every day
 
 jobs:
   # Best used in combination with actions/stale to assign a Stale label
