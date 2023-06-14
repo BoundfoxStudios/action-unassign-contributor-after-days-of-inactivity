@@ -6,6 +6,7 @@ import {GitHub} from '@actions/github/lib/utils';
 
 interface Issue {
   number: number;
+  labels: string[];
 }
 
 interface FetchIssuesArgs {
@@ -43,7 +44,10 @@ export const fetchIssues = async ({octokit, owner, repo, labels, lastActivity, e
     issues = issues.filter(issue => issue.assignees && !issue.assignees.some(assignee => exemptAssigneeList.includes(assignee.login)));
   }
 
-  return issues.map(issue => ({number: issue.number}));
+  return issues.map(issue => ({
+    number: issue.number,
+    labels: issue.labels.map(label => (typeof label === 'string' ? label : label.name) || '').filter(label => !!label),
+  }));
 };
 
 interface UnassignIssuesArgs {
@@ -69,6 +73,10 @@ export const unassignIssues = async ({octokit, issues, owner, repo, message, lab
     const labels = (labelsToRemove || '').split(',');
 
     for (const label of labels) {
+      if (!issue.labels.includes(label)) {
+        continue;
+      }
+
       await octokit.rest.issues.removeLabel({
         owner,
         repo,
