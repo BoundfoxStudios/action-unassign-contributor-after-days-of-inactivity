@@ -114,10 +114,14 @@ const fetchIssues = ({ octokit, owner, repo, labels, lastActivity, exemptAssigne
     if (exemptAssigneeList && exemptAssigneeList.length > 0) {
         issues = issues.filter(issue => issue.assignees && !issue.assignees.some(assignee => exemptAssigneeList.includes(assignee.login)));
     }
-    return issues.map(issue => ({
-        number: issue.number,
-        labels: issue.labels.map(label => (typeof label === 'string' ? label : label.name) || '').filter(label => !!label),
-    }));
+    return issues.map(issue => {
+        var _a;
+        return ({
+            number: issue.number,
+            labels: issue.labels.map(label => (typeof label === 'string' ? label : label.name) || '').filter(label => !!label),
+            assignees: ((_a = issue.assignees) !== null && _a !== void 0 ? _a : []).map(assignee => assignee.login),
+        });
+    });
 });
 exports.fetchIssues = fetchIssues;
 const unassignIssues = ({ octokit, issues, owner, repo, message, labelsToRemove }) => __awaiter(void 0, void 0, void 0, function* () {
@@ -126,7 +130,7 @@ const unassignIssues = ({ octokit, issues, owner, repo, message, labelsToRemove 
         yield octokit.rest.issues.removeAssignees({
             owner,
             repo,
-            assignees: [],
+            assignees: issue.assignees,
             issue_number: issue.number,
         });
         const labels = (labelsToRemove || '').split(',');

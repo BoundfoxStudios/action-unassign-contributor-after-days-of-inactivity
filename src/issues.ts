@@ -7,6 +7,7 @@ import {GitHub} from '@actions/github/lib/utils';
 interface Issue {
   number: number;
   labels: string[];
+  assignees: string[];
 }
 
 interface FetchIssuesArgs {
@@ -47,6 +48,7 @@ export const fetchIssues = async ({octokit, owner, repo, labels, lastActivity, e
   return issues.map(issue => ({
     number: issue.number,
     labels: issue.labels.map(label => (typeof label === 'string' ? label : label.name) || '').filter(label => !!label),
+    assignees: (issue.assignees ?? []).map(assignee => assignee.login),
   }));
 };
 
@@ -66,7 +68,7 @@ export const unassignIssues = async ({octokit, issues, owner, repo, message, lab
     await octokit.rest.issues.removeAssignees({
       owner,
       repo,
-      assignees: [],
+      assignees: issue.assignees,
       issue_number: issue.number,
     });
 
