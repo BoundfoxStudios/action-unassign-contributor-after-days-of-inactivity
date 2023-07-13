@@ -25,7 +25,9 @@ async function run(): Promise<void> {
       repo: github.context.repo.repo,
     });
 
+    core.info(`Unassigned ${issues.length} issues.`);
     core.setOutput('unassigned-issues-count', issues.length);
+    core.info(`Unassigned issues: ${issues.map(issue => issue.number).join(', ')}`);
     core.setOutput('unassigned-issues', JSON.stringify(issues.map(issue => issue.number)));
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message);
