@@ -39,10 +39,12 @@ export const fetchIssues = async ({octokit, owner, repo, labels, lastActivity, e
 
     return updatedAtDateTime < lastActivityDateTime;
   });
+  core.info(`Found ${issues.length} issues to process after filtering by last activity...`);
 
   const exemptAssigneeList = (exemptAssignees ?? '').split(',');
   if (exemptAssigneeList && exemptAssigneeList.length > 0) {
     issues = issues.filter(issue => issue.assignees && !issue.assignees.some(assignee => exemptAssigneeList.includes(assignee.login)));
+    core.info(`Found ${issues.length} issues to process after filtering by exempt assignees...`);
   }
 
   return issues.map(issue => ({
@@ -62,6 +64,7 @@ interface UnassignIssuesArgs {
 }
 
 export const unassignIssues = async ({octokit, issues, owner, repo, message, labelsToRemove}: UnassignIssuesArgs): Promise<void> => {
+  core.info(`Found ${issues.length} issues to unassign...`);
   for (const issue of issues) {
     core.info(`Unassigning issue #${issue.number}...`);
 
