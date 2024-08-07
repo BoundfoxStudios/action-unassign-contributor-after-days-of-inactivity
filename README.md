@@ -4,7 +4,7 @@ This action will unassign a contributor from an issue after days of inactivity.
 
 This action is best used with [actions/stale](https://github.com/actions/stale).
 
-See a running example [here](https://github.com/BoundfoxStudios/community-project/blob/develop/.github/workflows/project-management.yml#L105).
+See a running example [here](https://github.com/BoundfoxStudios/fairy-tale-defender/blob/80f4975c5236cf5b4d540b1538095b8bec9ab52c/.github/workflows/project-management.yml#L129).
 
 ## Usage
 
